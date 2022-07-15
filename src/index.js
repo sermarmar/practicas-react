@@ -29,6 +29,7 @@ const getGif = async() => {
         document.body.append(img);
     } catch (error) {
         //Manejo de error
+        console.error(error);
     }
 
 }
