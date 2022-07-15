@@ -1,54 +1,36 @@
-import { heroes, owners } from "./data/heroes";
-
-
-const getHeroesById = (id) => {
-    return heroes.find(heroe => heroe.id === id);
+/*const getImagenPromesa = () => {
+    return new Promise(resolve => resolve('https://jasldjfewalsas.com'));
 }
 
-console.log(getHeroesById(2));
+getImagenPromesa().then(console.log)*/
 
-const getHeroesByOwner = (owner) => {
-    return heroes.filter(heroe => heroe.owner === owner);
+//Asincrono
+const getImagen = async() => {
+
+    return 'https://jasldjfewalsas.com';
+
 }
 
-console.log(getHeroesByOwner('DC'));
+getImagen().then(console.log)
 
+//Sincrono
+const getGif = async() => {
 
-///Siguiente prueba PROMISE
+    try {
+        const apiKey = 'C1GDcgdRovtdHV4ZEi4VgrwVnJKagymo';
+        const resp = await (await fetch(`https://api.giphy.com/v1/gifs/random?api_key=${apiKey}`));
+        const { data } = await resp.json();
 
-const promesa = new Promise((resolve, reject) => {
+        const { url } = data.images.original;
 
-    setTimeout(() => {
-        //resolve();
-        const heroe = getHeroesById(10);
-        resolve(heroe);
-    }, 2000);
+        const img = document.createElement('img');
+        img.src = url;
 
-});
+        document.body.append(img);
+    } catch (error) {
+        //Manejo de error
+    }
 
-promesa.then((heroe) => {
-    console.log('heroe', heroe);
-}).catch(err => console.warn(err));
-
-//Async
-
-const getHeroesByIdAsync = (id) => {
-    return new Promise((resolve, reject) => {
-
-        setTimeout(() => {
-            //resolve();
-            const heroe = getHeroesById(id);
-            //resolve(heroe);
-            if (heroe) {
-                resolve(heroe);
-            } else {
-                reject('No se pudo encontrar el heroe');
-            }
-        }, 2000);
-
-    })
 }
 
-getHeroesByIdAsync(10)
-    .then(hero => console.log('Heroe', hero))
-    .catch(err => console.warn(err));
+getGif().then(console.log)
